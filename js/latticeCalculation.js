@@ -1,8 +1,3 @@
-window.onload = function() {
-    document.getElementById('add_btn').onclick = addPoint;
-    document.getElementById('delete_btn').onclick = deletePoints;
-};
-
 function handleQValueKnownClick() {
     if (document.getElementById('QValueKnownYes').checked) {
         document.getElementById('a').disabled = true;
@@ -35,22 +30,22 @@ function handleQValueKnownClick() {
         document.getElementById('h').disabled = false;
         document.getElementById('k').disabled = false;
         document.getElementById('l').disabled = false;
-        document.getElementById('q').disabled = true;
 
         document.getElementById('q').value = '';
+        document.getElementById('q').disabled = true;
     }
 }
 
 function handleLatticeValueChange() {
-    var a = document.getElementById('a').value;
-    var b = document.getElementById('b').value;
-    var c = document.getElementById('c').value;
-    var alpha = document.getElementById('alpha').value;
-    var beta = document.getElementById('beta').value;
-    var gamma = document.getElementById('gamma').value;
-    var h = document.getElementById('h').value;
-    var k = document.getElementById('k').value;
-    var l = document.getElementById('l').value;
+    let a = document.getElementById('a').value;
+    let b = document.getElementById('b').value;
+    let c = document.getElementById('c').value;
+    let alpha = document.getElementById('alpha').value;
+    let beta = document.getElementById('beta').value;
+    let gamma = document.getElementById('gamma').value;
+    let h = document.getElementById('h').value;
+    let k = document.getElementById('k').value;
+    let l = document.getElementById('l').value;
 
     if (a == null || a === ""
         || b == null || b === ""
@@ -65,15 +60,48 @@ function handleLatticeValueChange() {
         return;
     }
 
-    var alphaRad = toRadians(alpha);
-    var betaRad = toRadians(beta);
-    var gammaRad = toRadians(gamma);
-    var ax1 = [1, 0, 0];
-    var ax2 = [Math.cos(gammaRad), Math.sin(gammaRad), 0];
-    var ax3 = [Math.cos(betaRad), //TODO]
+    let alphaRad = toRadians(alpha);
+    let betaRad = toRadians(beta);
+    let gammaRad = toRadians(gamma);
+    let ax1 = [1, 0, 0];
+    let ax2 = [Math.cos(gammaRad), Math.sin(gammaRad), 0];
+    let ax3 = [Math.cos(betaRad), (Math.cos(alphaRad) - Math.cos(gammaRad) * Math.cos(betaRad)) / Math.sin(gammaRad), 0];
+    ax3[2] = Math.sqrt(1 - ax3[0] * ax3[0] - ax3[1] * ax3[1]);
 
+    ax1 = numeric.dot(a, ax1);
+    ax2 = numeric.dot(b, ax2);
+    ax3 = numeric.dot(c, ax3);
+    let volume = numeric.dot(ax3, crossProduct(ax1, ax2));
+    let reciprocalAx1 = numeric.dot(2 * Math.PI / volume, crossProduct(ax2, ax3));
+    let reciprocalAx2 = numeric.dot(2 * Math.PI / volume, crossProduct(ax3, ax1));
+    let reciprocalAx3 = numeric.dot(2 * Math.PI / volume, crossProduct(ax1, ax2));
+
+    let queryQ = numeric.add(numeric.dot(h, reciprocalAx1), numeric.dot(k, reciprocalAx2), numeric.dot(l, reciprocalAx3));
+    let qNorm = Math.sqrt(numeric.dot(queryQ, queryQ));
+
+    document.getElementById('q').value = parseFloat(qNorm.toFixed(5));
 }
+
+function addPoint() {
+    let q = document.getElementById('q').valueAsNumber;
+    let e = document.getElementById('energy').valueAsNumber;
+    if (q == null || q === "" || e == null || e === "") return;
+    queryPointsX.push(q);
+    queryPointsY.push(e);
+    drawCytopAndAlMap();
+}
+
+function deletePoints() {
+    queryPointsX = [];
+    queryPointsY = [];
+    drawCytopAndAlMap();
+}
+
 
 function toRadians(degree) {
     return degree * (Math.PI / 180);
+}
+
+function crossProduct(v1, v2) {
+    return [v1[1] * v2[2] - v1[2] * v2[1], v1[2] * v2[0] - v1[0] * v2[2], v1[0] * v2[1] - v1[1] * v2[0]];
 }
