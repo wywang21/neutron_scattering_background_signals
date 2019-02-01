@@ -1,0 +1,94 @@
+<head>
+    <!-- Numeric.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/data.js"></script>
+    <script src="js/latticeCalculation.js"></script>
+</head>
+<body>
+
+<div class="row">
+    <div class="column side">
+        <h2>Query Points</h2>
+
+        <p> <b>Q value is known.</b>
+        <br>
+            <b>Yes</b> <input type="radio" id="QValueKnownYes" name="criteria" checked onclick="handleQValueKnownClick()">
+            <b>&nbsp;&nbsp;No</b> <input type="radio" id="QValueKnownNo" name="criteria" onclick="handleQValueKnownClick()">
+        </p>
+
+        <br/>
+        <form>
+            <p>
+                <label for="a">a (&#8491;):</label>
+                <input id="a" type="number" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+            <p>
+                <label for="b">b (&#8491;):</label>
+                <input id="b" type="text" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+            <p>
+                <label for="c">c (&#8491;):</label>
+                <input id="c" type="number" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+            <p>
+                <label for="alpha">&alpha; (&#176;):</label>
+                <input id="alpha" type="number" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+            <p>
+                <label for="beta">&beta; (&#176;):</label>
+                <input id="beta" type="number" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+            <p>
+                <label for="gamma">&gamma; (&#176;):</label>
+                <input id="gamma" type="number" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+            <br>
+            <p>
+                <label for="h">H :</label>
+                <input id="h" type="number" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+            <p>
+                <label for="k">K :</label>
+                <input id="k" type="number" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+            <p>
+                <label for="l">L :</label>
+                <input id="l" type="number" disabled="disabled" min="0" onchange="handleLatticeValueChange()">
+            </p>
+        </form>
+
+        <hr>
+
+        <form>
+            <p>
+                <label for="q">Q (&#8491;<sup>-1</sup>):</label>
+                <input id="q" type="number">
+            </p>
+            <p>
+                <label for="energy">E (meV):</label>
+                <input id="energy" type="number">
+            </p>
+        </form>
+        <button id="add_btn">Add point</button>
+        <button id="delete_btn">Delete all points</button>
+    </div>
+
+    <div class="column middle">
+        <h2>Energy-Q Map</h2>
+        <div id="eqMap"></div>
+    </div>
+
+    <div class="column middle">
+        <h2>Column</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
+    </div>
+</div>
+
+<!-- Plotly chart will be drawn inside this DIV -->
+
+<script src="js/background.js"></script>
+</body>
