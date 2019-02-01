@@ -86,14 +86,14 @@
     <div class="column middle">
         <h2>Cut</h2>
         Cut along
-            <select id="cutMode">
+            <select id="cutMode" onchange="handleCutModeChange()">
                 <option value="cutAlongQ">Q</option>
                 <option value="cutAlongE">E</option>
             </select>
         <div id="binningOption">Energy Binned from
-            <input id="lowBound" type="number" value = 0>
+            <input id="lowBound" type="number" value = 0 onchange="handleBinningValueChange()">
             to
-            <input id="highBound" type="number" value = 1>
+            <input id="highBound" type="number" value = 1 onchange="handleBinningValueChange()">
             meV
         </div>
         <div id="cutPlot"></div>

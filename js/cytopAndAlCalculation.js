@@ -26,8 +26,14 @@ function drawCytopAndAlMap() {
 
     let layout = {
         title: 'E-Q map for CYTOP and Aluminum',
-        xaxis: {range: [0.5, 4]},
-        yaxis: {range: [-1, 50]},
+        xaxis: {
+            range: [0.5, 4],
+            title: 'Q (&#8491;<sup>-1</sup>)'
+        },
+        yaxis: {
+            range: [-1, 50],
+            title: 'E (meV)'
+        },
         margin: {
             t: 100,
             r: 100,
@@ -39,7 +45,6 @@ function drawCytopAndAlMap() {
     };
     Plotly.newPlot(eqMapDiv, plotData, layout);
 }
-
 
 function drawCytopAndAlCut() {
     let cutData = calculateCut();
@@ -61,7 +66,23 @@ function drawCytopAndAlCut() {
         },
         type: 'scatter'
     }];
-    Plotly.newPlot(cutPlotDiv, cutPlotData);
+
+    let xaxisTitle = '';
+    switch (document.getElementById('cutMode').value) {
+        case 'cutAlongQ':
+            xaxisTitle = 'Q (&#8491;<sup>-1</sup>)';
+            break;
+        case 'cutAlongE':
+            xaxisTitle = 'E (meV)';
+            break;
+    }
+
+    let layout = {
+        xaxis: {
+            title: xaxisTitle
+        }
+    };
+    Plotly.newPlot(cutPlotDiv, cutPlotData, layout);
 }
 
 function calculateCut() {
@@ -126,6 +147,30 @@ function calculateCut() {
             }
             return cutData;
     }
+}
+
+function handleBinningValueChange() {
+    drawCytopAndAlCut();
+}
+
+function handleCutModeChange() {
+    switch (document.getElementById('cutMode').value) {
+        case 'cutAlongE':
+            document.getElementById('binningOption').innerHTML = "Q Binned from\n" +
+                "<input id=\"lowBound\" type=\"number\" value = 2.5 onchange=\"handleBinningValueChange()\">\n" +
+                "to\n" +
+                "<input id=\"highBound\" type=\"number\" value = 2.6 onchange=\"handleBinningValueChange()\">\n" +
+                "&#8491;<sup>-1</sup>";
+            break;
+        case 'cutAlongQ':
+            document.getElementById('binningOption').innerHTML = "Energy Binned from\n" +
+                "<input id=\"lowBound\" type=\"number\" value = 0 onchange=\"handleBinningValueChange()\">\n" +
+                "to\n" +
+                "<input id=\"highBound\" type=\"number\" value = 1 onchange=\"handleBinningValueChange()\">\n" +
+                "meV";
+            break;
+    }
+    drawCytopAndAlCut();
 }
 
 
