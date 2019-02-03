@@ -7,29 +7,40 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/cytopAndAlData.js"></script>
     <script src="js/latticeCalculation.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/heliumRecoilData.js"></script>
 </head>
 <body>
 <div class="header">
-    <h1>CYTOP and Aluminum Background Signals</h1>
+    <h1>Neutron Scattering Background Signals Visualization Tool</h1>
 </div>
 
 <div class="pp">
     <p>
-        The data was collected at T = 5K at ARCS, SNS by Miaoyin Wang and Doug Abernathy. CYTOP is a commonly used
-        hydrogen-free glue in neutron scattering experiments, and it contributes the background signals at
-        Q &#8776; 1 &#8491;<sup>-1</sup> below 8 meV.
+        This webtool visualizes background signals commonly seen in neutron scattering experiments,
+        including those due to scattering from aluminum, CYTOP and helium gas.
+        CYTOP is commonly used as a hydrogen-free glue in neutron scattering experiments, and its signals are mainly at
+        Q &#8776; 1 &#8491;<sup>-1</sup> below 10 meV.
     </p>
+
+</div>
+
+<div class="pp">
+    Background type:
+    <select id="backgroundType" onchange="handleBackgroundTypeChange()">
+        <option value="cytopAndAluminum">CYTOP and Aluminum</option>
+        <option value="heliumRecoil">Helium Recoil</option>
+    </select>
 </div>
 
 <div class="row">
     <div class="column side">
         <h2>Query Points</h2>
 
-        <p> <b>Q value is known.</b>
+        <p> <b>Calculate Q from (H,K,L)?</b>
         <br>
-            <b>Yes</b> <input type="radio" id="QValueKnownYes" name="criteria" checked onclick="handleQValueKnownClick()">
-            <b>&nbsp;&nbsp;No</b> <input type="radio" id="QValueKnownNo" name="criteria" onclick="handleQValueKnownClick()">
+            <b>Yes</b> <input type="radio" id="QValueKnownNo" name="criteria" onclick="handleQValueKnownClick()">
+            <b>No</b> <input type="radio" id="QValueKnownYes" name="criteria" checked onclick="handleQValueKnownClick()">
+
         </p>
 
         <br/>
@@ -91,12 +102,15 @@
 
     <div class="column middle">
         <h2>Energy-Q Map</h2>
+
+        <div id = temperatureInput></div>
+
         <div id="eqMap"></div>
     </div>
 
     <div class="column middle">
         <h2>Cut</h2>
-        Cut along
+        Scan along
             <select id="cutMode" onchange="handleCutModeChange()">
                 <option value="cutAlongQ">Q</option>
                 <option value="cutAlongE">E</option>
@@ -113,11 +127,12 @@
 
 <div class="footer">
     <p>
+        The data of aluminum and CYTOP was collected at T = 5K at ARCS, SNS by Miaoyin Wang and Doug Abernathy.
         This webtool is developed by Weiyi Wang and source code can be found
         <a href="https://github.com/wywang21/neutron_scattering_background_signals">here</a> .
     </p>
 </div>
 
 <!-- Plotly chart will be drawn inside this DIV -->
-<script src="js/cytopAndAlCalculation.js"></script>
+<script src="js/main.js"></script>
 </body>

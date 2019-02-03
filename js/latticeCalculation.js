@@ -88,13 +88,13 @@ function addPoint() {
     if (q == null || q === "" || e == null || e === "") return;
     queryPointsX.push(q);
     queryPointsY.push(e);
-    drawCytopAndAlMap();
+    drawMap();
 }
 
 function deletePoints() {
     queryPointsX = [];
     queryPointsY = [];
-    drawCytopAndAlMap();
+    drawMap();
 }
 
 
