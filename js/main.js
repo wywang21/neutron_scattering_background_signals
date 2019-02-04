@@ -40,6 +40,7 @@ function handleCutModeChange() {
             document.getElementById('binningOption').innerHTML =
                 "Q = <input id=\"tScanQ\" type=\"number\" value = 2 onchange=\"handleBinningValueChange()\"> &#8491;<sup>-1</sup>\n" +
                 "&nbsp;&nbsp; E = <input id=\"tScanE\" type=\"number\" value = 3 onchange=\"handleBinningValueChange()\"> meV";
+            break;
     }
     drawCut();
 }
@@ -61,7 +62,9 @@ function handleBackgroundTypeChange() {
             document.getElementById('temperatureInput').innerHTML = "";
             document.getElementById('cutMode').innerHTML = "" +
                 "<option value=\"cutAlongQ\">Q</option>\n" +
-                "<option value=\"cutAlongE\">E</option>"
+                "<option value=\"cutAlongE\">E</option>";
+            document.getElementById('cutMode').value = 'cutAlongQ';
+            handleCutModeChange();
             break;
         case 'heliumRecoil':
             document.getElementById('temperatureInput').innerHTML =
@@ -71,7 +74,9 @@ function handleBackgroundTypeChange() {
             document.getElementById('cutMode').innerHTML = "" +
                 "<option value=\"cutAlongQ\">Q</option>\n" +
                 "<option value=\"cutAlongE\">E</option>\n" +
-                "<option value=\"cutAlongT\">T</option>\n"
+                "<option value=\"cutAlongT\">T</option>\n";
+            document.getElementById('cutMode').value = 'cutAlongQ';
+            handleCutModeChange();
             break;
     }
     drawMap();

@@ -10,7 +10,6 @@ function getHeliumRecoilData() {
     if (temperature2 == null || temperature2 === "") {
         temperature2 = 300;
     }
-    console.info("adfad")
     let xValues = numeric.linspace(0, 4, 200);
     let yValues = numeric.linspace(-1, 20, 85);
     let intensity1 = [];
